@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, Text, View, ActivityIndicator} from 'react-native';
 import ProductList from '../../components/ProductList';
+import LayoutSwitcher from '../../components/LayoutSwitcher';
 
 import firebase from 'react-native-firebase'
 import { thisExpression } from '@babel/types';
@@ -33,6 +34,10 @@ export default class AllProductsList extends Component {
     this.props.navigation.navigate('Details', selectedItem);
   }
 
+  selectLayout = (val) => {
+    this.setState({selectedLayout: val})
+  }
+
   componentDidMount = () => {
     this.getProducts();
   }  
@@ -47,6 +52,7 @@ export default class AllProductsList extends Component {
     }
     return(
       <View>
+        <LayoutSwitcher selectLayout={this.selectLayout}/>
         <ProductList
         layout={this.state.selectedLayout}
          onPress={this.showDetails}
