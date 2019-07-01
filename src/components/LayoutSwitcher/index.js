@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
-import { TouchableNativeFeedback, Image, View } from 'react-native';
+import React from 'react';
+import { TouchableNativeFeedback } from 'react-native';
+import { SwitcherView, SwitcherImage } from '../../styles';
 
-export default class LayoutSwitcher extends Component {
-  render() {
-    return(
-      <View style={{flexDirection: 'row'}}>
-        <TouchableNativeFeedback onPress={()=>this.props.selectLayout('row')}>
-          <Image style={{width: 50, height: 50}} source={require('../../assets/img/list.png')}/>
-        </TouchableNativeFeedback>
-        <TouchableNativeFeedback onPress={()=>this.props.selectLayout('column')}>
-          <Image style={{width: 50, height: 50}} source={require('../../assets/img/grid.png')}/>
-        </TouchableNativeFeedback>
-      </View>
-    )
-  }
+const listImage = require('../../assets/img/list.png');
+const gridImage = require('../../assets/img/grid.png');
+
+export default function LayoutSwitcher(props) {
+  return (
+    <SwitcherView>
+      <TouchableNativeFeedback onPress={() => props.selectLayout('row')}>
+        <SwitcherImage source={listImage} />
+      </TouchableNativeFeedback>
+      <TouchableNativeFeedback onPress={() => props.selectLayout('column')}>
+        <SwitcherImage source={gridImage} />
+      </TouchableNativeFeedback>
+    </SwitcherView>
+  );
 }

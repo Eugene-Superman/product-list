@@ -6,11 +6,10 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {View} from 'react-native';
+import React, { Component } from 'react';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 import AllProductsList from './src/screens/AllProductsList';
 import ProductDetails from './src/screens/ProductDetails';
-import { createStackNavigator, createAppContainer } from "react-navigation";
 
 const AppNavigator = createStackNavigator({
   Home: AllProductsList,

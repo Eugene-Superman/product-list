@@ -1,65 +1,62 @@
 import React, { Component } from 'react';
-import { FlatList, Text, View, ActivityIndicator} from 'react-native';
+import firebase from 'react-native-firebase';
 import ProductList from '../../components/ProductList';
 import LayoutSwitcher from '../../components/LayoutSwitcher';
-
-import firebase from 'react-native-firebase'
-import { thisExpression } from '@babel/types';
+import { Container, Spinner } from '../../styles';
 
 export default class AllProductsList extends Component {
   static navigationOptions = {
     title: 'All Products',
   };
 
-  state = { 
-    productsData: null, 
-    selectedLayout: 'row', 
+  state = {
+    productsData: null,
+    selectedLayout: 'row',
     isLoaded: false
   }
 
   getProducts = () => {
     firebase.firestore().collection('products').get()
-    .then((snapShot)=>{ 
-      this.setState({
-        productsData: snapShot.docs.map(el=>el.data()),
-        isLoaded: true,
-        gridLayout: ProductList
-      }) 
-    }).catch((err)=>{
-      console.log( err);
-    })
+      .then((snapShot) => {
+        this.setState({
+          productsData: snapShot.docs.map(el => el.data()),
+          isLoaded: true
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   showDetails = (selectedItem) => {
-    this.props.navigation.navigate('Details', selectedItem);
+    const { navigation } = this.props;
+    navigation.navigate('Details', selectedItem);
   }
 
   selectLayout = (val) => {
-    this.setState({selectedLayout: val})
+    this.setState({ selectedLayout: val });
   }
 
   componentDidMount = () => {
     this.getProducts();
-  }  
+  }
 
   render() {
-    if (!this.state.isLoaded) {
+    const { isLoaded, selectedLayout, productsData } = this.state;
+    if (!isLoaded) {
       return (
-        <View>
-          <ActivityIndicator />
-        </View>
-      )
+        <Spinner />
+      );
     }
-    return(
-      <View>
-        <LayoutSwitcher selectLayout={this.selectLayout}/>
+    return (
+      <Container>
+        <LayoutSwitcher selectLayout={this.selectLayout} />
         <ProductList
-        layout={this.state.selectedLayout}
-         onPress={this.showDetails}
-         productInformation={this.state.productsData} 
+          layout={selectedLayout}
+          onPress={this.showDetails}
+          productInformation={productsData}
         />
-      </View>
-    )
+      </Container>
+    );
   }
 }
-
