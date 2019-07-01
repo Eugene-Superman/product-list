@@ -13,7 +13,7 @@ export default function ProductList(props) {
         <TouchableNativeFeedback onPress={() => onPress(item)}>
           <ListItem selectedLayout={layout}>
             <ListImage source={{ uri: item.imgSrc }} resizeMode="contain" />
-            <ListItemName>{item.name}</ListItemName>
+            <ListItemName selectedLayout={layout}>{item.name}</ListItemName>
           </ListItem>
         </TouchableNativeFeedback>
       )}

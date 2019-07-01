@@ -22,8 +22,9 @@ export const ListItemName = styled.Text`
   flex: 1;
   align-items: center;
   flex-wrap: wrap;
-  padding: 5px;
+  padding: 5px 15px;
   font-size: 15px;
+  text-align: ${props => (props.selectedLayout === 'column' ? 'center' : 'left')};
 `;
 
 // Product Details
